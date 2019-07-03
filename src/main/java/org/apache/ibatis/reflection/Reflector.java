@@ -47,7 +47,9 @@ import org.apache.ibatis.reflection.property.PropertyNamer;
 public class Reflector {
 
   private final Class<?> type;
+  //可读属性
   private final String[] readablePropertyNames;
+  //可写属性
   private final String[] writablePropertyNames;
   private final Map<String, Invoker> setMethods = new HashMap<>();
   private final Map<String, Invoker> getMethods = new HashMap<>();
@@ -100,6 +102,7 @@ public class Reflector {
   }
 
   private void resolveGetterConflicts(Map<String, List<Method>> conflictingGetters) {
+    //
     for (Entry<String, List<Method>> entry : conflictingGetters.entrySet()) {
       Method winner = null;
       String propName = entry.getKey();
@@ -284,6 +287,8 @@ public class Reflector {
    * declared in this class and any superclass.
    * We use this method, instead of the simpler <code>Class.getMethods()</code>,
    * because we want to look for private methods as well.
+   * 这个方法返回一个数组，包含这个类及其父类的所有方法。
+   * 使用这个方法替换Class.getMethods,因为我们需要获取类的私有方法。
    *
    * @param cls The class
    * @return An array containing all methods in this class
